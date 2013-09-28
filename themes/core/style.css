@@ -1,0 +1,43 @@
+@charset "utf-8";
+/* CSS Document */
+
+/** 
+ * Description: Core theme for Malin
+ */
+
+/**
+ * Structure
+ */
+html{}
+body{
+   background-color:#eee;
+   font: 1em Verdana, Arial, Helvetica, sans-serif;
+}
+
+#header,
+#main,
+#footer {
+   margin:0 auto;
+   width:970px;
+   background-color:#fff;
+   padding: 1em;
+   box-shadow: 10px 10px 25px #888888;
+}
+
+#header{
+	-webkit-border-top-left-radius: 20px;
+	-webkit-border-top-right-radius: 20px;
+	-moz-border-radius-topleft: 20px;
+	-moz-border-radius-topright: 20px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+}
+
+#footer{
+	-webkit-border-bottom-left-radius: 20px;
+	-webkit-border-bottom-right-radius: 20px;
+	-moz-border-radius-bottomleft: 20px;
+	-moz-border-radius-bottomright: 20px;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+}
