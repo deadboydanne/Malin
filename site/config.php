@@ -25,6 +25,11 @@ $ma->config['timezone'] = 'Europe/Stockholm';
  */
 $ma->config['character_encoding'] = 'UTF-8';
 
+/**
+ * Set database(s).
+ */
+$ma->config['database'][0]['dsn'] = 'sqlite:' . MALIN_SITE_PATH . '/data/.ht.sqlite';
+
 /*
  * Define language
  */
