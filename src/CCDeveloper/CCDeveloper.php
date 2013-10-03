@@ -38,23 +38,23 @@ EOD;
   public function Links() {  
     $this->Menu();
     
-    $this = CMalin::Instance();
+    $ma = CMalin::Instance();
     
     $url = 'developer/links';
-    $current      = $this->request->CreateUrl($url);
+    $current      = $ma->request->CreateUrl($url);
 
-    $this->request->cleanUrl = false;
-    $this->request->querystringUrl = false;    
-    $default      = $this->request->CreateUrl($url);
+    $ma->request->cleanUrl = false;
+    $ma->request->querystringUrl = false;    
+    $default      = $ma->request->CreateUrl($url);
     
-    $this->request->cleanUrl = true;
-    $clean        = $this->request->CreateUrl($url);    
+    $ma->request->cleanUrl = true;
+    $clean        = $ma->request->CreateUrl($url);    
     
-    $this->request->cleanUrl = false;
-    $this->request->querystringUrl = true;    
-    $querystring  = $this->request->CreateUrl($url);
+    $ma->request->cleanUrl = false;
+    $ma->request->querystringUrl = true;    
+    $querystring  = $ma->request->CreateUrl($url);
     
-    $this->data['main'] .= <<<EOD
+    $ma->data['main'] .= <<<EOD
 <h2>CRequest::CreateUrl()</h2>
 <p>Here is a list of urls created using above method with various settings. All links should lead to
 this same page.</p>
@@ -73,16 +73,16 @@ EOD;
     * Create a method that shows the menu, same for all methods
    */
   private function Menu() {
-    $this = CMalin::Instance();
+    $ma = CMalin::Instance();
     $menu = array('developer', 'developer/index', 'developer/links');
     
     $html = null;
     foreach($menu as $val) {
-      $html .= "<li><a href='" . $this->request->CreateUrl($val) . "'>$val</a>";  
+      $html .= "<li><a href='" . $ma->request->CreateUrl($val) . "'>$val</a>";  
     }
     
-    $this->data['title'] = "The Developer Controller";
-    $this->data['main'] = <<<EOD
+    $ma->data['title'] = "The Developer Controller";
+    $ma->data['main'] = <<<EOD
 <h1>The Developer Controller</h1>
 <p>This is what you can do for now:</p>
 <ul>

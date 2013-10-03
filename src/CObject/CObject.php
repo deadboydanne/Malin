@@ -14,7 +14,7 @@ class CObject {
     * Constructor
     */
    protected function __construct() {
-    $ma = CLydia::Instance();
+    $ma = CMalin::Instance();
     $this->config   = &$ma->config;
     $this->request  = &$ma->request;
     $this->data     = &$ma->data;
