@@ -77,7 +77,8 @@ class CMalin implements ISingleton {
     else { 
       die('404. Page is not found.');
     }
-
+	
+   $formattedMethod = str_replace(array('_', '-'), '', $method);
 
   }
   
