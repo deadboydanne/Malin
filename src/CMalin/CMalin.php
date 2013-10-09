@@ -28,7 +28,7 @@ class CMalin implements ISingleton {
       $ma = &$this;
       require(MALIN_SITE_PATH.'/config.php');
 	  
-	  		// Start a named session
+	 	  		// Start a named session
 		session_name($this->config['session_name']);
 		session_start();
 
@@ -40,6 +40,9 @@ class CMalin implements ISingleton {
       if(isset($this->config['database'][0]['dsn'])) {
         $this->db = new CMDatabase($this->config['database'][0]['dsn']);
      }
+
+     // Create a container for all views and theme data
+     $this->views = new CViewContainer();
    }
    
    /**
@@ -116,6 +119,7 @@ class CMalin implements ISingleton {
 
     // Extract $ly->data to own variables and handover to the template file
     extract($this->data);      
+    extract($this->views->GetData());      
     include("{$themePath}/default.tpl.php");
   }
   

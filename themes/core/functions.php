@@ -61,3 +61,10 @@ function base_url($url) {
 function current_url() {
   return CMalin::Instance()->request->current_url;
 }
+
+/**
+ * Render all views.
+ */
+function render_views() {
+  return CMalin::Instance()->views->Render();
+}

@@ -9,11 +9,12 @@
   <div id="header">
     <?=$header?>
   </div>
-  <div id="main" role="main">
-    <?=$main?>
-    <?=get_debug()?>
-  </div>
-  <div id="footer">
+  <div id='wrap-main'>
+    <div id='main' role='main'>
+      <?=@$main?>
+      <?=render_views()?>
+    </div>
+  </div>  <div id="footer">
     <?=$footer?>
   </div>
 </body>

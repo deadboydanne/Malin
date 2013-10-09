@@ -13,7 +13,7 @@ class CObject {
    public $request;
    public $data;
    public $db;
-   
+   public $views;   
 
    /**
     * Constructor
@@ -24,6 +24,7 @@ class CObject {
     $this->request  = &$ma->request;
     $this->data     = &$ma->data;
     $this->db       = &$ma->db;
+    $this->views    = &$ma->views;
   }
 
 }
