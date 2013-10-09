@@ -7,10 +7,7 @@
 class CCGuestbook extends CObject implements IController, IHasSQL {
 
 
-  private $pageTitle = 'Malin Guestbook Example';
-  private $pageHeader = '<h1>Guestbook Example</h1><p>Showing off how to implement a guestbook in Malin.</p>';
-  private $pageMessages = '<h2>Current messages</h2>';
-  
+  private $pageTitle = 'Malin Guestbook Example';  
 
 
   /**
@@ -65,7 +62,7 @@ class CCGuestbook extends CObject implements IController, IHasSQL {
     elseif(isset($_POST['doCreate'])) {
       $this->CreateTableInDatabase();
     }            
-    header('Location: ' . $this->request->CreateUrl('guestbook'));
+    $this->RedirectTo($this->request->CreateUrl($this->request->controller));
   }
   
   /**
@@ -74,6 +71,7 @@ class CCGuestbook extends CObject implements IController, IHasSQL {
   private function CreateTableInDatabase() {
     try {
       $this->db->ExecuteQuery(self::SQL('create table guestbook'));
+      $this->session->AddMessage('success', 'Table created in database.');
     } catch(Exception$e) {
       die("$e<br/>Failed to open database: " . $this->config['database'][0]['dsn']);
     }
@@ -86,9 +84,10 @@ class CCGuestbook extends CObject implements IController, IHasSQL {
    */
   private function SaveNewToDatabase($entry) {
     $this->db->ExecuteQuery(self::SQL('insert into guestbook'), array($entry));
+    $this->session->AddMessage('success', 'inserted post into guestbook table.');
     if($this->db->rowCount() != 1) {
-      echo 'Failed to insert new guestbook item into database.';
-    }
+      $this->session->AddMessage('error', 'Failed to insert new guestbook item into database.');
+	}
   }
   
 
@@ -98,6 +97,7 @@ class CCGuestbook extends CObject implements IController, IHasSQL {
    */
   private function DeleteAllFromDatabase() {
     $this->db->ExecuteQuery(self::SQL('delete from guestbook'));
+    $this->session->AddMessage('info', 'Removed all messages from the database table.');
   }
   
   

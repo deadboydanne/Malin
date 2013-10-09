@@ -7,9 +7,12 @@
 /**
  * Set what to show as debug or developer information in the get_debug() theme helper.
  */
-$ma->config['debug']['malin'] = false;
-$ma->config['debug']['db-num-queries'] = false;
-$ma->config['debug']['db-queries'] = false;
+$ma->config['debug']['lydia'] = false;
+$ma->config['debug']['session'] = false;
+$ma->config['debug']['timer'] = true;
+$ma->config['debug']['db-num-queries'] = true;
+$ma->config['debug']['db-queries'] = true;
+
 
 /*
  * Set level of error reporting
@@ -21,6 +24,7 @@ ini_set('display_errors', 1);
  * Define session name
  */
 $ma->config['session_name'] = preg_replace('/[:\.\/-_]/', '', $_SERVER["SERVER_NAME"]);
+$ma->config['session_key']  = 'malin';
 
 /*
  * Define server timezone
