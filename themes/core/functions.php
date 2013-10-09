@@ -9,7 +9,7 @@ $ma->data['footer'] = '<p>Footer: &copy; Malin by Daniel Schäder (dasc13@dbwebb
 <a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3">css3</a>
 <a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css21">css21</a>
 <a href="http://validator.w3.org/unicorn/check?ucn_uri=referer&amp;ucn_task=conformance">unicorn</a>
-<a href="http://validator.w3.org/checklink?uri={$ly->request->current_url}">links</a>
+<a href="http://validator.w3.org/checklink?uri={$ma->request->current_url}">links</a>
 <a href="http://qa-dev.w3.org/i18n-checker/index?async=false&amp;docAddr={$ly->request->current_url}">i18n</a>
 <!-- <a href="link?">http-header</a> -->
 <a href="http://csslint.net/">css-lint</a>
@@ -34,10 +34,17 @@ $ma->data['footer'] = '<p>Footer: &copy; Malin by Daniel Schäder (dasc13@dbwebb
  * Print debuginformation from the framework.
  */
 function get_debug() {
-  $ma = CMalin::Instance();
-  $html = "<h2>Debuginformation</h2><hr><p>The content of the config array:</p><pre>" . htmlentities(print_r($ma->config, true)) . "</pre>";
-  $html .= "<hr><p>The content of the data array:</p><pre>" . htmlentities(print_r($ma->data, true)) . "</pre>";
-  $html .= "<hr><p>The content of the request array:</p><pre>" . htmlentities(print_r($ma->request, true)) . "</pre>";
+  $ma = CMalin::Instance();  
+  $html = null;
+  if(isset($ma->config['debug']['db-num-queries']) && $ma->config['debug']['db-num-queries'] && isset($ma->db)) {
+    $html .= "<p>Database made " . $ma->db->GetNumQueries() . " queries.</p>";
+  }    
+  if(isset($ma->config['debug']['db-queries']) && $ma->config['debug']['db-queries'] && isset($ma->db)) {
+    $html .= "<p>Database made the following queries.</p><pre>" . implode('<br/><br/>', $ma->db->GetQueries()) . "</pre>";
+  }    
+  if(isset($ma->config['debug']['malin']) && $ma->config['debug']['malin']) {
+    $html .= "<hr><h3>Debuginformation</h3><p>The content of CMalin:</p><pre>" . htmlent(print_r($ma, true)) . "</pre>";
+  }    
   return $html;
 }
 

@@ -4,6 +4,13 @@
  *
  */
 
+/**
+ * Set what to show as debug or developer information in the get_debug() theme helper.
+ */
+$ma->config['debug']['malin'] = false;
+$ma->config['debug']['db-num-queries'] = false;
+$ma->config['debug']['db-queries'] = false;
+
 /*
  * Set level of error reporting
  */
