@@ -57,7 +57,7 @@ $ma->config['base_url'] = null;
 /**
  * Define session name
  */
-$ma->config['session_name'] = preg_replace('/[:\.\/-_]/', '', $_SERVER["SERVER_NAME"]);
+$ma->config['session_name'] = preg_replace('/[:\.\/-_]/', '', __DIR__);
 $ma->config['session_key']  = 'malin';
 
 
