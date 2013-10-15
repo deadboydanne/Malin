@@ -13,7 +13,7 @@ class CObject {
    public $request;
    public $data;
    public $db;
-   public $views;   
+   public $views;
    public $session;
 	
    /**
@@ -32,7 +32,7 @@ class CObject {
 	/**
 	 * Redirect to another url and store the session
 	 */
-	protected function RedirectTo($url) {
+	protected function RedirectTo($urlOrController=null, $method=null) {
     $ma = CMalin::Instance();
     if(isset($ma->config['debug']['db-num-queries']) && $ma->config['debug']['db-num-queries'] && isset($ma->db)) {
       $this->session->SetFlash('database_numQueries', $this->db->GetNumQueries());
@@ -44,7 +44,31 @@ class CObject {
 	    $this->session->SetFlash('timer', $ma->timer);
     }    
     $this->session->StoreInSession();
-    header('Location: ' . $this->request->CreateUrl('guestbook'));
+    header('Location: ' . $this->request->CreateUrl($urlOrController, $method));
+  }
+  
+	/**
+	 * Redirect to a method within the current controller. Defaults to index-method. Uses RedirectTo().
+	 *
+	 * @param string method name the method, default is index method.
+	 */
+	protected function RedirectToController($method=null) {
+    $this->RedirectTo($this->request->controller, $method);
+  }
+
+
+
+
+	/**
+	 * Redirect to a controller and method. Uses RedirectTo().
+	 *
+	 * @param string controller name the controller or null for current controller.
+	 * @param string method name the method, default is current method.
+	 */
+	protected function RedirectToControllerMethod($controller=null, $method=null) {
+	  $controller = is_null($controller) ? $this->request->controller : null;
+	  $method = is_null($method) ? $this->request->method : null;	  
+    $this->RedirectTo($this->request->CreateUrl($controller, $method));
   }
 
 }
