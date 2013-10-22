@@ -49,6 +49,15 @@ body{
 padding: 0.8em; margin-bottom: 1em; border: 2px solid #ddd; }
 
 
+
+/**
+ * Forms
+ */
+input{font:inherit;}
+input[readonly]{color:#666;}
+label{font-size:smaller;}
+
+
 .error, .alert { background: #fbe3e4; color: #8a1f11; border-color: #fbc2c4; }
 .notice, .warning { background: #fff6bf; color: #514721; border-color: #ffd324; }
 .success       { background: #e6efc2; color: #264409; border-color: #c6d880; }

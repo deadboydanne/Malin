@@ -63,17 +63,14 @@ function get_messages_from_session() {
   return $html;
 }
 
-
-
-
 /**
  * Login menu. Creates a menu which reflects if user is logged in or not.
  */
 function login_menu() {
   $ma = CMalin::Instance();
-  if($ma->user->IsAuthenticated()) {
-    $items = "<a href='" . create_url('user/profile') . "'>" . $ma->user->GetAcronym() . "</a> ";
-    if($ma->user->IsAdministrator()) {
+  if($ma->user['isAuthenticated']) {
+    $items = "<a href='" . create_url('user/profile') . "'>" . $ma->user['acronym'] . "</a> ";
+    if($ma->user['hasRoleAdministrator']) {
       $items .= "<a href='" . create_url('acp') . "'>acp</a> ";
     }
     $items .= "<a href='" . create_url('user/logout') . "'>logout</a> ";
@@ -83,18 +80,12 @@ function login_menu() {
   return "<nav>$items</nav>";
 }
 
-
-
-
 /**
  * Prepend the base_url.
  */
 function base_url($url=null) {
   return CMalin::Instance()->request->base_url . trim($url, '/');
 }
-
-
-
 
 /**
  * Create a url to an internal resource.
