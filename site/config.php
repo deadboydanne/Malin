@@ -18,6 +18,11 @@ ini_set('display_errors', 1);
 $ma->config['hashing_algorithm'] = 'sha1salt';
 
 /**
+ * Allow or disallow creation of new user accounts.
+ */
+$ma->config['create_new_users'] = true;
+
+/**
  * Set what to show as debug or developer information in the get_debug() theme helper.
  */
 $ma->config['debug']['malin'] = true;
