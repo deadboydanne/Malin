@@ -58,7 +58,8 @@ padding: 0.8em; margin-bottom: 1em; border: 2px solid #ddd; }
 input{font:inherit;}
 input[readonly]{color:#666;}
 label{font-size:smaller;}
-
+.validation-failed{border:2px solid red;}
+.validation-message{color:red;font-size:smaller;}
 /**
  * Login menu
  */
