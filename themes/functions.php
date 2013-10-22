@@ -69,7 +69,7 @@ function get_messages_from_session() {
 function login_menu() {
   $ma = CMalin::Instance();
   if($ma->user['isAuthenticated']) {
-    $items = "<a href='" . create_url('user/profile') . "'>" . $ma->user['acronym'] . "</a> ";
+    $items = "<a href='" . create_url('user/profile') . "'><img class='gravatar' src='" . get_gravatar(20) . "' alt=''> " . $ma->user['acronym'] . "</a> ";
     if($ma->user['hasRoleAdministrator']) {
       $items .= "<a href='" . create_url('acp') . "'>acp</a> ";
     }
@@ -129,3 +129,9 @@ function render_views() {
   return CMalin::Instance()->views->Render();
 }
 
+/**
+ * Get a gravatar based on the user's email.
+ */
+function get_gravatar($size=null) {
+  return 'http://www.gravatar.com/avatar/' . md5(strtolower(trim(CMalin::Instance()->user['email']))) . '.jpg?' . ($size ? "s=$size" : null);
+}

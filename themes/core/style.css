@@ -5,6 +5,8 @@
  * Description: Core theme for Malin
  */
 
+a img{border:none}
+
 /**
  * Structure
  */
@@ -57,6 +59,13 @@ input{font:inherit;}
 input[readonly]{color:#666;}
 label{font-size:smaller;}
 
+/**
+ * Login menu
+ */
+#login-menu{float:right;font-size:smaller;}
+#login-menu img.gravatar{vertical-align:middle;}
+#login-menu a{text-decoration:none;}
+#login-menu a:hover{text-decoration:underline;}
 
 .error, .alert { background: #fbe3e4; color: #8a1f11; border-color: #fbc2c4; }
 .notice, .warning { background: #fff6bf; color: #514721; border-color: #ffd324; }
