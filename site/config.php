@@ -12,7 +12,10 @@ error_reporting(-1);
 ini_set('display_errors', 1);
 
 
-
+/**
+ * How to hash password of new users, choose from: plain, md5salt, md5, sha1salt, sha1.
+ */
+$ma->config['hashing_algorithm'] = 'sha1salt';
 
 /**
  * Set what to show as debug or developer information in the get_debug() theme helper.

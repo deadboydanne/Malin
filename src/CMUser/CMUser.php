@@ -165,5 +165,48 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
     return $this->db->RowCount() === 1;
   }
   
+  /**
+   * Create password.
+   *
+   * @param $plain string the password plain text to use as base.
+   * @param $algorithm string stating what algorithm to use, plain, md5, md5salt, sha1, sha1salt. 
+   * defaults to the settings of site/config.php.
+   * @returns array with 'salt' and 'password'.
+   */
+  public function CreatePassword($plain, $algorithm=null) {
+    $password = array(
+      'algorithm'=>($algorithm ? $algoritm : CMalin::Instance()->config['hashing_algorithm']),
+      'salt'=>null
+    );
+    switch($password['algorithm']) {
+      case 'sha1salt': $password['salt'] = sha1(microtime()); $password['password'] = sha1($password['salt'].$plain); break;
+      case 'md5salt': $password['salt'] = md5(microtime()); $password['password'] = md5($password['salt'].$plain); break;
+      case 'sha1': $password['password'] = sha1($plain); break;
+      case 'md5': $password['password'] = md5($plain); break;
+      case 'plain': $password['password'] = $plain; break;
+      default: throw new Exception('Unknown hashing algorithm');
+    }
+    return $password;
+  }
+  
+  /**
+   * Check if password matches.
+   *
+   * @param $plain string the password plain text to use as base.
+   * @param $algorithm string the algorithm mused to hash the user salt/password.
+   * @param $salt string the user salted string to use to hash the password.
+   * @param $password string the hashed user password that should match.
+   * @returns boolean true if match, else false.
+   */
+  public function CheckPassword($plain, $algorithm, $salt, $password) {
+    switch($algorithm) {
+      case 'sha1salt': return $password === sha1($salt.$plain); break;
+      case 'md5salt': return $password === md5($salt.$plain); break;
+      case 'sha1': return $password === sha1($plain); break;
+      case 'md5': return $password === md5($plain); break;
+      case 'plain': return $password === $plain; break;
+      default: throw new Exception('Unknown hashing algorithm');
+    }
+  }
   
 }
