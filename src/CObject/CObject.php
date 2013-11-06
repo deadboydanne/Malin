@@ -1,29 +1,33 @@
 <?php
 /**
- * Holding a instance of CLydia to enable use of $this in subclasses.
+ * Holding a instance of CLydia to enable use of $this in subclasses and provide some helpers.
  *
- * @package LydiaCore
+ * @package MalinCore
  */
 class CObject {
 
-   /**
-    * Members
-    */
-   protected $config;
-   protected $request;
-   protected $data;
-   protected $db;
-   protected $views;
-   protected $session;
-   protected $user; 
-  	
-  /**
-   * Constructor, can be instantiated by sending in the $ly reference.
-   */
-  protected function __construct($ma=null) {
-    if(!$ma) {
-      $ma = CMalin::Instance();
-    } 
+
+        /**
+         * Members
+         */
+        protected $config;
+        protected $request;
+        protected $data;
+        protected $db;
+        protected $views;
+        protected $session;
+        protected $user;
+
+
+
+
+        /**
+         * Constructor, can be instantiated by sending in the $ly reference.
+         */
+        protected function __construct($ma=null) {
+          if(!$ma) {
+            $ma = CMalin::Instance();
+          } 
     $this->config   = &$ma->config;
     $this->request  = &$ma->request;
     $this->data     = &$ma->data;
@@ -31,12 +35,19 @@ class CObject {
     $this->views    = &$ma->views;
     $this->session  = &$ma->session;
     $this->user     = &$ma->user;
-  }
+        }
 
-	/**
-	 * Redirect to another url and store the session
-	 */
-	protected function RedirectTo($urlOrController=null, $method=null) {
+
+
+
+        /**
+         * Redirect to another url and store the session
+   *
+         * @param $url string the relative url or the controller
+         * @param $method string the method to use, $url is then the controller or empty for current controller
+         * @param $arguments string the extra arguments to send to the method
+         */
+        protected function RedirectTo($urlOrController=null, $method=null, $arguments=null) {
     $ma = CMalin::Instance();
     if(isset($this->config['debug']['db-num-queries']) && $this->config['debug']['db-num-queries'] && isset($this->db)) {
       $this->session->SetFlash('database_numQueries', $this->db->GetNumQueries());
@@ -45,36 +56,43 @@ class CObject {
       $this->session->SetFlash('database_queries', $this->db->GetQueries());
     }    
     if(isset($this->config['debug']['timer']) && $this->config['debug']['timer']) {
-	    $this->session->SetFlash('timer', $ma->timer);
+            $this->session->SetFlash('timer', $ma->timer);
     }    
     $this->session->StoreInSession();
-    header('Location: ' . $this->request->CreateUrl($urlOrController, $method));
-  }
-
-  
-	/**
-	 * Redirect to a method within the current controller. Defaults to index-method. Uses RedirectTo().
-	 *
-	 * @param string method name the method, default is index method.
-	 */
-	protected function RedirectToController($method=null) {
-    $this->RedirectTo($this->request->controller, $method);
+    header('Location: ' . $this->request->CreateUrl($urlOrController, $method, $arguments));
   }
 
 
 
 
-	/**
-	 * Redirect to a controller and method. Uses RedirectTo().
-	 *
-	 * @param string controller name the controller or null for current controller.
-	 * @param string method name the method, default is current method.
-	 */
-	protected function RedirectToControllerMethod($controller=null, $method=null) {
-	  $controller = is_null($controller) ? $this->request->controller : null;
-	  $method = is_null($method) ? $this->request->method : null;	  
-    $this->RedirectTo($this->request->CreateUrl($controller, $method));
+        /**
+         * Redirect to a method within the current controller. Defaults to index-method. Uses RedirectTo().
+         *
+         * @param string method name the method, default is index method.
+         * @param $arguments string the extra arguments to send to the method
+         */
+        protected function RedirectToController($method=null, $arguments=null) {
+    $this->RedirectTo($this->request->controller, $method, $arguments);
   }
+
+
+
+
+        /**
+         * Redirect to a controller and method. Uses RedirectTo().
+         *
+         * @param string controller name the controller or null for current controller.
+         * @param string method name the method, default is current method.
+         * @param $arguments string the extra arguments to send to the method
+         */
+        protected function RedirectToControllerMethod($controller=null, $method=null, $arguments=null) {
+          $controller = is_null($controller) ? $this->request->controller : null;
+          $method = is_null($method) ? $this->request->method : null;          
+    $this->RedirectTo($this->request->CreateUrl($controller, $method, $arguments));
+  }
+
+
+
 
         /**
          * Save a message in the session. Uses $this->session->AddMessage()
@@ -96,16 +114,18 @@ class CObject {
 
 
 
-
-	/**
-	 * Create an url. Uses $this->request->CreateUrl()
-	 *
-	 * @param $urlOrController string the relative url or the controller
-	 * @param $method string the method to use, $url is then the controller or empty for current
-	 * @param $arguments string the extra arguments to send to the method
-	 */
-	protected function CreateUrl($urlOrController=null, $method=null, $arguments=null) {
+        /**
+         * Create an url. Uses $this->request->CreateUrl()
+         *
+         * @param $urlOrController string the relative url or the controller
+         * @param $method string the method to use, $url is then the controller or empty for current
+         * @param $arguments string the extra arguments to send to the method
+         */
+        protected function CreateUrl($urlOrController=null, $method=null, $arguments=null) {
     return $this->request->CreateUrl($urlOrController, $method, $arguments);
   }
+
+
+
 
 }

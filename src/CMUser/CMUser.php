@@ -10,7 +10,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
   /**
    * Properties
    */
-  public $profile = array();
+  public $profile;
 
 
 
@@ -23,6 +23,10 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
     $profile = $this->session->GetAuthenticatedUser();
     $this->profile = is_null($profile) ? array() : $profile;
     $this['isAuthenticated'] = is_null($profile) ? false : true;
+    if(!$this['isAuthenticated']) {
+      $this['id'] = 1;
+      $this['acronym'] = 'anonomous';      
+    }
   }
 
 
@@ -75,6 +79,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
       $this->db->ExecuteQuery(self::SQL('create table user'));
       $this->db->ExecuteQuery(self::SQL('create table group'));
       $this->db->ExecuteQuery(self::SQL('create table user2group'));
+      $this->db->ExecuteQuery(self::SQL('insert into user'), array('anonomous', 'Anonomous, not authenticated', null, 'plain', null, null));
       $password = $this->CreatePassword('root');
       $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'The Administrator', 'root@dbwebb.se', $password['algorithm'], $password['salt'], $password['password']));
       $idRootUser = $this->db->LastInsertId();
@@ -156,18 +161,6 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
     $this->session->SetAuthenticatedUser($this->profile);
     return $this->db->RowCount() === 1;
   }
-
-  /**
-   * Change user password.
-   *
-   * @param $plain string plaintext of the new password
-   * @returns boolean true if success else false.
-   */
-  public function ChangePassword($plain) {
-    $password = $this->CreatePassword($plain);
-    $this->db->ExecuteQuery(self::SQL('update password'), array($password['algoritm'], $password['salt'], $password['password'], $this['id']));
-    return $this->db->RowCount() === 1;
-  }
   
   /**
    * Create password.
@@ -192,6 +185,19 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
     }
     return $password;
   }
+  
+  /**
+   * Change user password.
+   *
+   * @param $plain string plaintext of the new password
+   * @returns boolean true if success else false.
+   */
+  public function ChangePassword($plain) {
+    $password = $this->CreatePassword($plain);
+    $this->db->ExecuteQuery(self::SQL('update password'), array($password['algorithm'], $password['salt'], $password['password'], $this['id']));
+    return $this->db->RowCount() === 1;
+  }
+
   
   /**
    * Check if password matches.

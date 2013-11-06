@@ -99,6 +99,16 @@ function create_url($urlOrController=null, $method=null, $arguments=null) {
 }
 
 
+/**
+ * Filter data according to a filter. Uses CMContent::Filter()
+ *
+ * @param $data string the data-string to filter.
+ * @param $filter string the filter to use.
+ * @returns string the filtered string.
+ */
+function filter_data($data, $filter) {
+  return CMContent::Filter($data, $filter);
+}
 
 
 /**
@@ -111,6 +121,24 @@ function theme_url($url) {
 
 
 
+/**
+ * Escape data to make it safe to write in the browser.
+ */
+function esc($str) {
+  return htmlEnt($str);
+}
+
+
+
+/**
+ * Display diff of time between now and a datetime. 
+ *
+ * @param $start datetime|string
+ * @returns string
+ */
+function time_diff($start) {
+  return formatDateTimeDiff($start);
+}
 
 /**
  * Return the current url.

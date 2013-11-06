@@ -109,6 +109,9 @@ $ma->config['controllers'] = array(
   'developer' => array('enabled' => true,'class' => 'CCDeveloper'),
   'guestbook' => array('enabled' => true,'class' => 'CCGuestbook'),
   'user'      => array('enabled' => true,'class' => 'CCUser'),
+  'page'      => array('enabled' => true,'class' => 'CCPage'),
+  'blog'      => array('enabled' => true,'class' => 'CCBlog'),
+  'content'   => array('enabled' => true,'class' => 'CCContent'), 
   'acp'       => array('enabled' => true,'class' => 'CCAdminControlPanel'),
 );
 
