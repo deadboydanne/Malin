@@ -109,6 +109,7 @@ $ma->config['controllers'] = array(
   'developer' => array('enabled' => true,'class' => 'CCDeveloper'),
   'guestbook' => array('enabled' => true,'class' => 'CCGuestbook'),
   'user'      => array('enabled' => true,'class' => 'CCUser'),
+  'theme'     => array('enabled' => true,'class' => 'CCTheme'),
   'page'      => array('enabled' => true,'class' => 'CCPage'),
   'blog'      => array('enabled' => true,'class' => 'CCBlog'),
   'content'   => array('enabled' => true,'class' => 'CCContent'), 
@@ -120,7 +121,8 @@ $ma->config['controllers'] = array(
  * Settings for the theme.
  */
 $ma->config['theme'] = array(
-  // The name of the theme in the theme directory
-  'name'    => 'core', 
+
+  'name'    => 'grid',   // The name of the theme in the theme directory
+  'stylesheet' => 'style.php', // Main stylesheet to include in template files
 );
 
