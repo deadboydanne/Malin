@@ -130,5 +130,14 @@ $ma->config['theme'] = array(
     'footer-column-one','footer-column-two','footer-column-three','footer-column-four',
     'footer',
   ),
+  // Add static entries for use in the template file. 
+  'data' => array(
+    'header' => '<h1>Malin</h1>',
+    'slogan' => 'A PHP-based MVC-inspired CMF',
+    'favicon' => 'logo_80x80.png',
+    'logo' => 'logo_80x80.png',
+    'logo_width'  => 80,
+    'logo_height' => 80,
+    'footer' => '<p>Malin © by Daniel Schäder (nds_se@hotmail.com)</p>',
+  ),
 );
-
