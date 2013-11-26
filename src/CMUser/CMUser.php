@@ -2,7 +2,7 @@
 /**
  * A model for an authenticated user.
  * 
- * @package LydiaCore
+ * @package MalinCore
  */
 class CMUser extends CObject implements IHasSQL, ArrayAccess {
 

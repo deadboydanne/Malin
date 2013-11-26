@@ -114,6 +114,7 @@ $ma->config['controllers'] = array(
   'blog'      => array('enabled' => true,'class' => 'CCBlog'),
   'content'   => array('enabled' => true,'class' => 'CCContent'), 
   'acp'       => array('enabled' => true,'class' => 'CCAdminControlPanel'),
+  'module'    => array('enabled' => true,'class' => 'CCModules'),
 );
 
 
