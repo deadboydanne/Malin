@@ -89,6 +89,7 @@ tfoot{font-style:italic;}
 @bgtest: hsla(0,0%,90%,0.8);
 @color: #333;
 @font: 1em Verdana, Arial, Helvetica, sans-serif;
+.alwaysShowScrollbar() {overflow:-moz-scrollbars-vertical;overflow-y:scroll;}
 
 /* Wrap elements to site width in grid layout*/
 .wrap() {width:@total-width;margin:0 auto;.clearfix();}
@@ -123,13 +124,13 @@ a img{border:none}
 /**
  * Structure
  */
-html{}
+html{.alwaysShowScrollbar()}
 body{
 	background-color:@bgcolor1;
    color:@color;font:@font;
 }
 
-#inner-wrap-header,
+
 #inner-wrap-featured,
 #inner-wrap-footer-column,
 #inner-wrap-footer,
@@ -138,40 +139,31 @@ body{
 #inner-wrap-triptych,
 #inner-wrap-footer-column {
    margin:0 auto;
-   background-color:@bgcolor2;
    padding: 1em;
-   box-shadow: 10px 10px 25px #888888;
 }
-
-#inner-wrap-header{
-	-webkit-border-top-left-radius: 20px;
-	-webkit-border-top-right-radius: 20px;
-	-moz-border-radius-topleft: 20px;
-	-moz-border-radius-topright: 20px;
-	border-top-left-radius: 20px;
-	border-top-right-radius: 20px;
-}
-
-#inner-wrap-footer{
-	-webkit-border-bottom-left-radius: 20px;
-	-webkit-border-bottom-right-radius: 20px;
-	-moz-border-radius-bottomleft: 20px;
-	-moz-border-radius-bottomright: 20px;
-	border-bottom-left-radius: 20px;
-	border-bottom-right-radius: 20px;
-}
-
-
 
 /** --------------------------------------------------------------
 * The header area.
 *
 */
 .tablecell() {display:table-cell;vertical-align:middle;text-align:center;}
-#outer-wrap-header{height:181px;margin-top:@magic-number/2;}
-#inner-wrap-header{.wrap();}
+#outer-wrap-header{padding-top:@magic-number/2;margin-bottom:@magic-number/2;}
+#inner-wrap-header{.wrap();  padding-top:1em; padding-right:1em; padding-left:1em;}
 #header{.column(12);}
 
+/** --------------------------------------------------------------
+ * Navbar
+ */
+#navbar{
+  ul.menu{list-style-type:none;padding:2px 8px;margin:0;
+    li{padding:0;margin:0;display:inline;
+      a{padding:6px 8px;text-decoration:none;border:2px solid transparent;
+        &:hover{background:#ddd;border:2px solid #999;}
+        &.selected{background:#ccc;border:2px solid #999;}
+      }
+    }
+  }
+}
 
 /** --------------------------------------------------------------
 * Login menu

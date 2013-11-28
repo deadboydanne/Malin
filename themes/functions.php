@@ -126,7 +126,7 @@ function base_url($url=null) {
  * @param string the extra arguments to the method, leave empty if not using method.
  */
 function create_url($urlOrController=null, $method=null, $arguments=null) {
-  return CMalin::Instance()->request->CreateUrl($urlOrController, $method, $arguments);
+  return CMalin::Instance()->CreateUrl($urlOrController, $method, $arguments);
 }
 
 
@@ -146,11 +146,19 @@ function filter_data($data, $filter) {
  * Prepend the theme_url, which is the url to the current theme directory.
  */
 function theme_url($url) {
-  $ma = CMalin::Instance();
-  return "{$ma->request->base_url}themes/{$ma->config['theme']['name']}/{$url}";
+  return create_url(CMalin::Instance()->themeUrl . "/{$url}");
 }
 
 
+/**
+ * Prepend the theme_parent_url, which is the url to the parent theme directory.
+ *
+ * @param $url string the url-part to prepend.
+ * @returns string the absolute url.
+ */
+function theme_parent_url($url) {
+  return create_url(CMalin::Instance()->themeParentUrl . "/{$url}");
+}
 
 /**
  * Escape data to make it safe to write in the browser.

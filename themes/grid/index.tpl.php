@@ -3,7 +3,7 @@
 <head>
   <meta charset='utf-8'/>
   <title><?=$title?></title>
-  <link rel='stylesheet' href='<?=$stylesheet?>'/>
+  <link rel='stylesheet' href='<?=theme_url($stylesheet)?>'/>
   <?php if(isset($inline_style)): ?><style><?=$inline_style?></style><?php endif; ?>
 </head>
 <body>
@@ -16,6 +16,9 @@
         <span id='site-title'><a href='<?=base_url()?>'><?=$header?></a></span>
         <span id='site-slogan'><?=$slogan?></span>
       </div>
+	  <?php if(region_has_content('navbar')): ?>
+      	<div id='navbar'><?=render_views('navbar')?></div>
+      <?php endif; ?>
     </div>
   </div>
 </div>
