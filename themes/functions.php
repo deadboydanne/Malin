@@ -101,7 +101,7 @@ function login_menu() {
   $ma = CMalin::Instance();
   if($ma->user['isAuthenticated']) {
     $items = "<a href='" . create_url('user/profile') . "'><img class='gravatar' src='" . get_gravatar(20) . "' alt=''> " . $ma->user['acronym'] . "</a> ";
-    if($ma->user['hasRoleAdministrator']) {
+    if($ma->user['hasRoleAdmin']) {
       $items .= "<a href='" . create_url('acp') . "'>acp</a> ";
     }
     $items .= "<a href='" . create_url('user/logout') . "'>logout</a> ";

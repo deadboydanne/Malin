@@ -173,7 +173,7 @@ h1 {
   color: #111;
   margin-bottom: 22px;
   font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
-  font-size: 2.375em;
+  font-size: 2.375em !important;
   line-height: 1.1579;
   border-bottom: 1px solid #ccc;
   margin-bottom: 21px;
@@ -183,7 +183,7 @@ h2 {
   color: #111;
   margin-bottom: 22px;
   font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
-  font-size: 1.875em;
+  font-size: 1.875em !important;
   line-height: 1.4667;
 }
 h3 {
@@ -191,7 +191,7 @@ h3 {
   color: #111;
   margin-bottom: 22px;
   font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
-  font-size: 1.375em;
+  font-size: 1.375em !important;
   line-height: 1;
 }
 h4 {
@@ -199,7 +199,7 @@ h4 {
   color: #111;
   margin-bottom: 22px;
   font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
-  font-size: 1.25em;
+  font-size: 1.25em !important;
   line-height: 1.1;
 }
 h5 {
@@ -207,7 +207,7 @@ h5 {
   color: #111;
   margin-bottom: 22px;
   font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
-  font-size: 1em;
+  font-size: 1em !important;
   font-weight: bold;
 }
 h6 {
@@ -215,7 +215,7 @@ h6 {
   color: #111;
   margin-bottom: 22px;
   font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
-  font-size: 1em;
+  font-size: 1em !important;
   font-weight: bold;
   margin-bottom: 0;
 }
@@ -226,6 +226,9 @@ h4 img,
 h5 img,
 h6 img {
   margin: 0;
+}
+.red{
+	color:rgb(255,0,0);
 }
 li ul,
 li ol {
@@ -637,3 +640,15 @@ body {
 .silent {
   color: #999;
 }
+
+/** --------------------------------------------------------------
+* Default style without Database
+*
+*/
+
+html{background-color:#FFE2B3;}
+body{background-color:#D0DCE1; font: 1em Verdana, Geneva, sans-serif;}
+#outer-wrap-header{background-color:#FFE2B3;border-bottom:2px solid #FFCE80;}
+#outer-wrap-footer{background-color:#FFE2B3}
+a{color:#436370}
+#navbar ul.menu li a.selected{background-color:#D0DCE1;border-bottom:none;}

@@ -11,14 +11,13 @@ class CCMycontroller extends CObject implements IController {
   
 
   /**
-   * The page about me
+   * The startpage
    */
   public function Index() {
-    $content = new CMContent(5);
-    $this->views->SetTitle('About me'.htmlEnt($content['title']))
-                ->AddInclude(__DIR__ . '/page.tpl.php', array(
-                  'content' => $content,
-                ));
+	$pages = $this->user->viewPages();
+	$pageTitle = $pages[0]['startName'];
+    $this->views->SetTitle($pageTitle)
+                ->AddInclude(__DIR__ . '/page.tpl.php', array());
   }
 
 
@@ -27,9 +26,15 @@ class CCMycontroller extends CObject implements IController {
    */
   public function Blog() {
     $content = new CMContent();
+	$ma = CMalin::Instance();
+    if($ma->user['hasRoleAdmin']) {
+		$admin = true;
+	}else{
+		$admin = false;
+	}
     $this->views->SetTitle('My blog')
                 ->AddInclude(__DIR__ . '/blog.tpl.php', array(
-                  'contents' => $content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),
+                  'contents' => $content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')), 'admin' => $admin,
                 ));
   }
 
@@ -55,6 +60,33 @@ class CCMycontroller extends CObject implements IController {
          ));
   }
   
+  /**
+   * The extra page one
+   */
+  public function extraPageOne() {
+	$pages = $this->user->viewPages();
+	$pageTitle = $pages[0]['pageOneName'];
+    $this->views->SetTitle($pageTitle)
+                ->AddInclude(__DIR__ . '/extraPageOne.tpl.php', array());
+  }
+  
+  /**
+   * The extra page two
+   */
+  public function extraPageTwo() {
+	$pages = $this->user->viewPages();
+	$pageTitle = $pages[0]['pageTwoName'];
+    $this->views->SetTitle($pageTitle)
+                ->AddInclude(__DIR__ . '/extraPageTwo.tpl.php', array());
+  }
+
+  /**
+   * The extra page one
+   */
+  public function accessDenied() {
+    $this->views->SetTitle('Access Denied')
+                ->AddInclude(__DIR__ . '/accessDenied.tpl.php', array());
+  }
 
 } 
 

@@ -163,5 +163,98 @@ class CMModules extends CObject {
     return $installed;
   }
 
+  public function saveAdminAcc($acronym, $password, $password1, $name, $email) {
+	  if(isset($_POST['DoCreate'])){
+		  if(empty($acronym)){
+			  $_SESSION['installAdminErrorMsg'] = "*Please type in an acronym.";
+			  header("location: ".$this->request->CreateUrl('module', 'installadmin'));
+			  exit;
+		  }
+		  if(empty($password)){
+			  $_SESSION['installAdminErrorMsg'] = "*Please type in a password.";
+			  header("location: ".$this->request->CreateUrl('module', 'installadmin'));
+			  exit;
+		  }
+		  if($password != $password1){
+			  $_SESSION['installAdminErrorMsg'] = "*Your passwords does not match.";
+			  header("location: ".$this->request->CreateUrl('module', 'installadmin'));
+			  exit;
+		  }
+		  if(empty($name)){
+			  $_SESSION['installAdminErrorMsg'] = "*Please type in your name.";
+			  header("location: ".$this->request->CreateUrl('module', 'installadmin'));
+			  exit;
+		  }
+		  if(empty($email)){
+			  $_SESSION['installAdminErrorMsg'] = "*Please type in your E-mail.";
+			  header("location: ".$this->request->CreateUrl('module', 'installadmin'));
+			  exit;
+		  }
+		  
+		  try{
+			  $this->user->Create($acronym, $password, $name, $email);
+			  
+			  return array('success', 'Successfully created admin account.');
+
+			} catch(Exception$e) {
+			  die("$e<br/>Failed to open database: " . $this->config['database'][0]['dsn']);
+			}  		  		  
+	  }else{
+		  
+		  return array('error', 'Could not create admin account');
+	  }
+	  
+  }
+
+  public function savePages($headerName, $headerSlogan, $footerHeadline, $startActive, $guestActive, $blogActive, $pageOneActive, $pageTwoActive, $startName, $guestName, $blogName, $pageOneName, $pageTwoName) {
+	  if(isset($_POST['CreatePages']) || isset($_POST['doUpdate'])){
+		  if(isset($_POST['CreatePages'])){
+			  if(empty($headerName)){
+				  $_SESSION['installPagesErrorMsg'] = "*Please type in a name for the webpage.";
+				  header("location: ".$this->request->CreateUrl('module', 'installpages'));
+				  exit;
+			  }
+		  }
+		  if(isset($_POST['doUpdate'])){
+			  if(empty($headerName)){
+				  header("location: ".$this->request->CreateUrl('acp', 'managePages'));
+				  exit;
+			  }
+		  }
+		  
+		  try{
+			  
+			  $this->user->savePageSettings($headerName, $headerSlogan, $footerHeadline, $startActive, $guestActive, $blogActive, $pageOneActive, $pageTwoActive, $startName, $guestName, $blogName, $pageOneName, $pageTwoName);
+			  
+			  return array('success', 'Successfully setup your pages.');
+
+			} catch(Exception$e) {
+			  die("$e<br/>Failed to open database: " . $this->config['database'][0]['dsn']);
+			}  		  		  
+	  }else{
+		  
+		  return array('error', 'Could not create admin account');
+	  }
+	  
+  }
+
+  public function saveStyle($backgroundColor, $foregroundColor, $menuSelectedColor, $headerBottomBorderColor, $menuSelectBorderColor, $aColor, $aHoverColor, $fontColor, $font) {
+	  if(isset($_POST['CreateStyle']) || isset($_POST['doSubmit'])){
+		  
+		  try{
+			  
+			  $this->user->saveStyleSettings($backgroundColor, $foregroundColor, $menuSelectedColor, $headerBottomBorderColor, $menuSelectBorderColor, $aColor, $aHoverColor, $fontColor, $font);
+			  
+			  return array('success', 'Successfully setup your style.');
+
+			} catch(Exception$e) {
+			  die("$e<br/>Failed to open database: " . $this->config['database'][0]['dsn']);
+			}  		  		  
+	  }else{
+		  
+		  return array('error', 'Could setup your style');
+	  }
+	  
+  }
 
 }

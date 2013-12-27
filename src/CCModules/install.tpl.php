@@ -13,3 +13,7 @@
 <?php endforeach; ?>
 </tbody>
 </table>
+
+<form action="<?=create_url('module', 'installadmin')?>" method="post">
+	<input type="submit" name="DoSubmit" value="Next" />
+</form>

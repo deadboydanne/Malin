@@ -56,20 +56,9 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
           $this->db->ExecuteQuery(self::SQL('create table group'));
           $this->db->ExecuteQuery(self::SQL('create table user2group'));
           $this->db->ExecuteQuery(self::SQL('insert into user'), array('anonomous', 'Anonomous, not authenticated', null, 'plain', null, null));
-          $password = $this->CreatePassword('root');
-          $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'The Administrator', 'root@dbwebb.se', $password['algorithm'], $password['salt'], $password['password']));
-          $idRootUser = $this->db->LastInsertId();
-          $password = $this->CreatePassword('doe');
-          $this->db->ExecuteQuery(self::SQL('insert into user'), array('doe', 'John/Jane Doe', 'doe@dbwebb.se', $password['algorithm'], $password['salt'], $password['password']));
-          $idDoeUser = $this->db->LastInsertId();
           $this->db->ExecuteQuery(self::SQL('insert into group'), array('admin', 'The Administrator Group'));
-          $idAdminGroup = $this->db->LastInsertId();
           $this->db->ExecuteQuery(self::SQL('insert into group'), array('user', 'The User Group'));
-          $idUserGroup = $this->db->LastInsertId();
-          $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idAdminGroup));
-          $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idUserGroup));
-          $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idDoeUser, $idUserGroup));
-          return array('success', 'Successfully created the database tables and created a default admin user as root:root and an ordinary user as doe:doe.');
+          return array('success', 'Successfully created the database tables');
         } catch(Exception$e) {
           die("$e<br/>Failed to open database: " . $this->config['database'][0]['dsn']);
         }   
@@ -88,19 +77,35 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
    */
   public static function SQL($key=null) {
     $queries = array(
-      'drop table user'         => "DROP TABLE IF EXISTS User;",
-      'drop table group'        => "DROP TABLE IF EXISTS Groups;",
-      'drop table user2group'   => "DROP TABLE IF EXISTS User2Groups;",
-      'create table user'       => "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, email TEXT, algorithm TEXT, salt TEXT, password TEXT, created DATETIME default (datetime('now')), updated DATETIME default NULL);",
-      'create table group'      => "CREATE TABLE IF NOT EXISTS Groups (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, created DATETIME default (datetime('now')), updated DATETIME default NULL);",
-      'create table user2group' => "CREATE TABLE IF NOT EXISTS User2Groups (idUser INTEGER, idGroups INTEGER, created DATETIME default (datetime('now')), PRIMARY KEY(idUser, idGroups));",
-      'insert into user'        => 'INSERT INTO User (acronym,name,email,algorithm,salt,password) VALUES (?,?,?,?,?,?);',
-      'insert into group'       => 'INSERT INTO Groups (acronym,name) VALUES (?,?);',
-      'insert into user2group'  => 'INSERT INTO User2Groups (idUser,idGroups) VALUES (?,?);',
-      'check user password'     => 'SELECT * FROM User WHERE (acronym=? OR email=?);',
-      'get group memberships'   => 'SELECT * FROM Groups AS g INNER JOIN User2Groups AS ug ON g.id=ug.idGroups WHERE ug.idUser=?;',
-      'update profile'          => "UPDATE User SET name=?, email=?, updated=datetime('now') WHERE id=?;",
-      'update password'         => "UPDATE User SET algorithm=?, salt=?, password=?, updated=datetime('now') WHERE id=?;",
+      'drop table user'         		=> "DROP TABLE IF EXISTS User;",
+      'drop table group'        		=> "DROP TABLE IF EXISTS Groups;",
+      'drop table user2group'   		=> "DROP TABLE IF EXISTS User2Groups;",
+      'create table user'       		=> "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, email TEXT, algorithm TEXT, salt TEXT, password TEXT, created DATETIME default (datetime('now')), updated DATETIME default NULL);",
+      'create table group'      		=> "CREATE TABLE IF NOT EXISTS Groups (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, created DATETIME default (datetime('now')), updated DATETIME default NULL);",
+      'create table user2group' 		=> "CREATE TABLE IF NOT EXISTS User2Groups (idUser INTEGER, idGroups INTEGER, created DATETIME default (datetime('now')), PRIMARY KEY(idUser, idGroups));",
+      'insert into user'        		=> 'INSERT INTO User (acronym,name,email,algorithm,salt,password) VALUES (?,?,?,?,?,?);',
+      'insert into group'       		=> 'INSERT INTO Groups (acronym,name) VALUES (?,?);',
+      'insert into user2group'  		=> 'INSERT INTO User2Groups (idUser,idGroups) VALUES (?,?);',
+      'check user password'     		=> 'SELECT * FROM User WHERE (acronym=? OR email=?);',
+      'get group memberships'   		=> 'SELECT * FROM Groups AS g INNER JOIN User2Groups AS ug ON g.id=ug.idGroups WHERE ug.idUser=?;',
+      'update profile'          		=> "UPDATE User SET name=?, email=?, updated=datetime('now') WHERE id=?;",
+      'update groups'          			=> "UPDATE Groups SET name=?, acronym=?, updated=datetime('now') WHERE id=?;",
+      'update password'         		=> "UPDATE User SET algorithm=?, salt=?, password=?, updated=datetime('now') WHERE id=?;",
+      'update adminConfig'      		=> 'UPDATE adminConfig SET headerTitle=?, headerSlogan=?, footerHeadline=?, startActive=?, guestActive=?, blogActive=?, pageOneActive=?, pageTwoActive=?, startName=?, guestName=?, blogName=?, pageOneName=?, pageTwoName=? WHERE id=1;',
+      'update adminStyleConfig' 		=> 'UPDATE adminStyleConfig SET backgroundColor=?, foregroundColor=?, menuSelectedColor=?, headerBottomBorderColor=?, menuSelectBorderColor=?, aColor=?, aHoverColor=?, fontColor=?, font=? WHERE id=1;',
+	  'select *'						=> 'SELECT * FROM User ORDER BY id ASC;',
+	  'select * adminStyleConfig'		=> 'SELECT * FROM adminStyleConfig WHERE id=1;',
+	  'select * adminConfig'			=> 'SELECT * FROM adminConfig WHERE id=1;',
+	  'select * by id'					=> 'SELECT * FROM User WHERE (id=?);',
+	  'select * by admin'				=> 'SELECT * FROM User WHERE (acronym="admin");',
+	  'select * groups'					=> 'SELECT * FROM Groups ORDER BY id ASC;',
+	  'select * groups by id'			=> 'SELECT * FROM Groups WHERE (id=?);',
+	  'get group memberships'			=> 'SELECT * FROM Groups INNER JOIN User2Groups ON Groups.id=User2Groups.idGroups WHERE User2Groups.idUser=?;',
+	  'delete from user2groups'			=> 'DELETE FROM User2Groups WHERE (idUser=?)',
+	  'delete group from user2groups'	=> 'DELETE FROM User2Groups WHERE (idGroups=?)',
+	  'delete from user'				=> 'DELETE FROM user WHERE (id=?)',
+	  'delete from groups'				=> 'DELETE FROM groups WHERE (id=?)',
+	  'check acronym'					=> 'SELECT count(1) FROM User WHERE (acronym=?);',
      );
     if(!isset($queries[$key])) {
       throw new Exception("No such SQL query, key '$key' was not found.");
@@ -200,9 +205,12 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
    * @param $plain string plaintext of the new password
    * @returns boolean true if success else false.
    */
-  public function ChangePassword($plain) {
+  public function ChangePassword($plain, $userId=null) {
+	if($userId == null){
+		$userId = $this['id'];
+	}
     $password = $this->CreatePassword($plain);
-    $this->db->ExecuteQuery(self::SQL('update password'), array($password['algorithm'], $password['salt'], $password['password'], $this['id']));
+    $this->db->ExecuteQuery(self::SQL('update password'), array($password['algorithm'], $password['salt'], $password['password'], $userId));
     return $this->db->RowCount() === 1;
   }
 
@@ -239,6 +247,13 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
   public function Create($acronym, $password, $name, $email) {
     $pwd = $this->CreatePassword($password);
     $this->db->ExecuteQuery(self::SQL('insert into user'), array($acronym, $name, $email, $pwd['algorithm'], $pwd['salt'], $pwd['password']));
+	$idUser = $this->db->LastInsertId();
+	if($acronym == 'admin'){
+		$this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idUser, 1));
+		$this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idUser, 2));
+	}else{
+		$this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idUser, 2));
+	}
     if($this->db->RowCount() == 0) {
       $this->AddMessage('error', "Failed to create user.");
       return false;
@@ -246,4 +261,164 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
     return true;
   }
   
+   /**
+   * Save settings for your pages
+   */
+  
+  public function savePageSettings($headerName, $headerSlogan, $footerHeadline, $startActive, $guestActive, $blogActive, $pageOneActive, $pageTwoActive, $startName, $guestName, $blogName, $pageOneName, $pageTwoNam){
+  	$this->db->ExecuteQuery(self::SQL('update adminConfig'), array($headerName, $headerSlogan, $footerHeadline, $startActive, $guestActive, $blogActive, $pageOneActive, $pageTwoActive, $startName, $guestName, $blogName, $pageOneName, $pageTwoNam));
+  }
+
+   /**
+   * Save settings for your style
+   */
+
+  public function saveStyleSettings($backgroundColor, $foregroundColor, $menuSelectedColor, $headerBottomBorderColor, $menuSelectBorderColor, $aColor, $aHoverColor, $fontColor, $font){
+  	$this->db->ExecuteQuery(self::SQL('update adminStyleConfig'), array($backgroundColor, $foregroundColor, $menuSelectedColor, $headerBottomBorderColor, $menuSelectBorderColor, $aColor, $aHoverColor, $fontColor, $font));
+  }
+
+   /**
+   * Get the entire user list
+   */
+  
+  public function userList(){
+      $userList = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select *'));
+	  return $userList;
+  }
+
+   /**
+   * Get all info of specified user
+   */
+
+  public function viewUser($userId){
+      $user['user'] = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select * by id'), array($userId));
+      $user['groups'] = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select * groups'));
+      $user['user2groups'] = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('get group memberships'), array($userId));
+	  return $user;
+  }
+  
+   /**
+   * Get all info of specified user
+   */
+
+  public function deleteUser($userId){
+      $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('delete from user'), array($userId));
+	  header("location: ".$this->request->CreateUrl('acp', 'manageUsers'));
+  }
+
+   /**
+   * Save user changes made by admin
+   */
+
+  public function saveUser($userId, $name, $email){
+    $this->db->ExecuteQuery(self::SQL('update profile'), array($name, $email, $userId));
+  }
+
+   /**
+   * Delete user from groups
+   */
+
+  public function deleteUserFromGroups($userId){
+    $this->db->ExecuteQuery(self::SQL('delete from user2groups'), array($userId));
+  }
+
+   /**
+   * Insert user into groups
+   */
+
+  public function addUserToGroups($userId, $groupId){
+    $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($userId, $groupId));
+  }
+
+   /**
+   * Check if acronym already exists
+   */
+
+  public function checkAcronym($acronym){
+    $acronymCheck = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('check acronym'), array($acronym));
+	if($acronymCheck[0]['count(1)'] > 0){
+		return false;
+	}else{
+		return true;
+	}
+  }
+  
+   /**
+   * Get all info of specified user
+   */
+
+  public function deleteGroup($groupId){
+      $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('delete from groups'), array($groupId));
+	  header("location: ".$this->request->CreateUrl('acp', 'manageGroups'));
+  }
+
+   /**
+   * Delete group connection to users
+   */
+
+  public function deleteGroupConnections($groupId){
+    $this->db->ExecuteQuery(self::SQL('delete group from user2groups'), array($groupId));
+  }
+
+   /**
+   * Save group changes made by admin
+   */
+
+  public function saveGroup($groupId, $name, $acronym){
+    $this->db->ExecuteQuery(self::SQL('update groups'), array($name, $acronym, $groupId));
+  }
+
+   /**
+   * create group
+   */
+
+  public function createGroup($name, $acronym){
+    $this->db->ExecuteQuery(self::SQL('insert into group' ), array($acronym, $name));
+  }
+
+   /**
+   * Get all info of specified group
+   */
+
+  public function viewGroup($groupId){
+      $groups = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select * groups by id'), array($groupId));
+	  return $groups;
+  }
+
+   /**
+   * Get the entire group list
+   */
+  
+  public function groupList(){
+      $groupList = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select * groups'));
+	  return $groupList;
+  }
+
+   /**
+   * Get all current pages settings
+   */
+
+  public function viewPages(){
+      $pages = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select * adminConfig'));
+	  return $pages;
+  }
+  
+   /**
+   * Get all current style settings
+   */
+
+  public function viewStyle(){
+      $style = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select * adminStyleConfig'));
+	  return $style;
+  }
+  
+   /**
+   * Get admin
+   */
+
+  public function getAdmin(){
+      $checkAdmin = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select * by admin'));
+	  return $checkAdmin;
+  }
+
 }

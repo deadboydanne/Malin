@@ -50,8 +50,7 @@ class CMalin implements ISingleton {
 
           // Create a object for the user
           $this->user = new CMUser($this);
-  }
-  
+  }  
   
   /**
          * Singleton pattern. Get the instance of the latest created object or create a new one. 

@@ -1,7 +1,2 @@
-<?php if($content['id']):?>
-  <h1><?=esc($content['title'])?></h1>
-  <p><?=$content->GetFilteredData()?></p>
-  <p class='smaller-text silent'><a href='<?=create_url("content/edit/{$content['id']}")?>'>edit</a> <a href='<?=create_url("content")?>'>view all</a></p>
-<?php else:?>
-  <p>404: No such page exists.</p>
-<?php endif;?>
+<h1>Startpage</h1>
+<p>Here your startpage content will show. You can edit the contents in the file /site/src/CCMycontroller/page.tpl.php</p>

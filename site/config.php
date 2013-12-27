@@ -4,6 +4,53 @@
  *
  */
 
+/**
+ * Default variables
+ */
+
+$headerTitle = 'Malin';
+$headerSlogan = 'A PHP-based MVC-inspired CMF';
+$footerHeadline = 'Malin © by Daniel Schäder (nds_se@hotmail.com)';
+$startActive = 'on';
+$guestActive = 'on';
+$blogActive = 'on';
+$pageOneActive = 'on';
+$pageTwoActive = 'on';
+$startName = 'Startpage';
+$guestName = 'Guestbook';
+$blogName = 'Blog';
+$pageOneName = 'Extra page 1';
+$pageTwoName = 'Extra page 2';
+
+/**
+ * Connect to database
+ */
+
+if(filesize(MALIN_SITE_PATH.'/data/.ht.sqlite') > 100){
+$db = new PDO('sqlite:' . MALIN_SITE_PATH . '/data/.ht.sqlite', null, null, null);
+$db->SetAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+
+$stmt = $db->prepare('SELECT * from adminConfig;');
+$stmt->execute();
+$query = $stmt->fetchAll(PDO::FETCH_ASSOC);	
+
+	if($query != null){
+	$headerTitle = $query[0]['headerTitle'];
+	$headerSlogan = $query[0]['headerSlogan'];
+	$footerHeadline = $query[0]['footerHeadline'];
+	$startActive = $query[0]['startActive'];
+	$guestActive = $query[0]['guestActive'];
+	$blogActive = $query[0]['blogActive'];
+	$pageOneActive = $query[0]['pageOneActive'];
+	$pageTwoActive = $query[0]['pageTwoActive'];
+	$startName = $query[0]['startName'];
+	$guestName = $query[0]['guestName'];
+	$blogName = $query[0]['blogName'];
+	$pageOneName = $query[0]['pageOneName'];
+	$pageTwoName = $query[0]['pageTwoName'];
+	}
+	
+}
 
 /**
  * Set level of error reporting
@@ -140,8 +187,8 @@ $ma->config['theme'] = array(
   ),
   // Add static entries for use in the template file. 
   'data' => array(
-    'header' => '<h1>Malin</h1>',
-    'slogan' => 'A PHP-based MVC-inspired CMF',
+    'header' => '<h1>'.$headerTitle.'</h1>',
+    'slogan' => $headerSlogan,
     'favicon' => 'logo_80x80.png',
     'logo' => 'logo_80x80.png',
     'logo_width'  => 80,
@@ -173,13 +220,27 @@ $ma->config['menus'] = array(
     'guestbook' => array('label'=>'Guestbook', 'url'=>'guestbook'),
     'blog'      => array('label'=>'Blog', 'url'=>'blog'),
   ),
-  'my-navbar' => array(
-    'home'      => array('label'=>'About Me', 'url'=>'my'),
-    'blog'      => array('label'=>'My Blog', 'url'=>'my/blog'),
-    'guestbook' => array('label'=>'Guestbook', 'url'=>'my/guestbook'),
-  ),
+  'my-navbar' => array()
 );
+  if($startActive == 'on'){
+	  $ma->config['menus']['my-navbar']['home'] = array('label'=>$startName, 'url'=>'my');
+  };
 
+  if($guestActive == 'on'){
+	  $ma->config['menus']['my-navbar']['guestbook'] = array('label'=>$guestName, 'url'=>'my/guestbook');
+  };
+  
+  if($blogActive == 'on'){
+	  $ma->config['menus']['my-navbar']['blog'] = array('label'=>$blogName, 'url'=>'my/blog');
+  };
+  
+  if($pageOneActive == 'on'){
+	  $ma->config['menus']['my-navbar']['pageOne'] = array('label'=>$pageOneName, 'url'=>'my/extraPageOne');
+  };
+  
+  if($pageTwoActive == 'on'){
+	  $ma->config['menus']['my-navbar']['pageTwo'] = array('label'=>$pageTwoName, 'url'=>'my/extraPageTwo');
+  };
 
 /**
  * Settings for the theme. The theme may have a parent theme.
@@ -209,21 +270,21 @@ $ma->config['theme'] = array(
   'path'            => 'site/themes/mytheme',
   //'path'            => 'themes/grid',
   'parent'          => 'themes/grid',
-  'stylesheet'      => 'style.css',
+  'stylesheet'      => 'style.php',
   'template_file'   => 'index.tpl.php',
   'regions' => array('navbar', 'flash','featured-first','featured-middle','featured-last',
     'primary','sidebar','triptych-first','triptych-middle','triptych-last',
     'footer-column-one','footer-column-two','footer-column-three','footer-column-four',
     'footer',
   ),
-  'menu_to_region' => array('my-navbar'=>'navbar'),
-  'data' => array(
-    'header' => 'Malin',
-    'slogan' => 'A PHP-based MVC-inspired CMF',
-    'favicon' => 'logo_80x80.png',
-    'logo' => 'logo_80x80.png',
-    'logo_width'  => 80,
-    'logo_height' => 80,
-    'footer' => '<p>Malin © by Daniel Schäder (nds_se@hotmail.com)</p>',
+  'menu_to_region' 	=> array('my-navbar'=>'navbar'),
+  'data' 			=> array(
+    'header' 		=> $headerTitle,
+    'slogan' 		=> $headerSlogan,
+    'favicon' 		=> 'logo_80x80.png',
+    'logo' 			=> 'logo_80x80.png',
+    'logo_width'  	=> 80,
+    'logo_height' 	=> 80,
+    'footer' 		=> '<p>'.$footerHeadline.'</p>',
   ),
 );

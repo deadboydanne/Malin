@@ -3,7 +3,9 @@
 <head>
   <meta charset='utf-8'/>
   <title><?=$title?></title>
+  	<link rel='shortcut icon' href='<?=theme_url($favicon)?>'/>
   <link rel='stylesheet' href='<?=theme_url($stylesheet)?>'/>
+  <script type="text/javascript" src="../jscolor/jscolor.js"></script>
   <?php if(isset($inline_style)): ?><style><?=$inline_style?></style><?php endif; ?>
 </head>
 <body>
@@ -13,6 +15,7 @@
     <div id='header'>
       <div id='login-menu'><?=login_menu()?></div>
       <div id='banner'>
+        <a href='<?=base_url()?>'><img class='site-logo' src='<?=theme_url($logo)?>' alt='logo' width='<?=$logo_width?>' height='<?=$logo_height?>' /></a>
         <span id='site-title'><a href='<?=base_url()?>'><?=$header?></a></span>
         <span id='site-slogan'><?=$slogan?></span>
       </div>

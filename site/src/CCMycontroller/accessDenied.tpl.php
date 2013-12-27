@@ -1,0 +1,1 @@
+<div class="error">Acces Denied, Only admin users may enter this page</div>
