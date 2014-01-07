@@ -5,15 +5,15 @@
 
 <form action="<?=create_url('module', 'installfinish')?>" method="post">
 	<p><label for="backgroundColor">Background Color:</label><br />
-	<input class="color" name="backgroundColor" value="#FFE2B3" /></p>
+	<input class="color" name="backgroundColor" value="#BFFF75" /></p>
     <p><label for="foregroundColor">Foreground Color:</label><br />
-    <input class="color" name="foregroundColor" value="#D0DCE1" /></p>
+    <input class="color" name="foregroundColor" value="#FFFFFF" /></p>
     <p><label for="menuSelectedColor">Menu selected color:</label><br />
-    <input class="color" name="menuSelectedColor" value="#D0DCE1" /></p>
+    <input class="color" name="menuSelectedColor" value="#00FF12" /></p>
     <p><label for="headerBottomBorderColor">Header bottom border color:</label><br />
-    <input class="color" name="headerBottomBorderColor" value="#FFCE80" /></p>
+    <input class="color" name="headerBottomBorderColor" value="#00A30B" /></p>
     <p><label for="menuSelectBorderColor">Menu selected border color:</label><br />
-    <input class="color" name="menuSelectBorderColor" value="#999" /></p>
+    <input class="color" name="menuSelectBorderColor" value="#00A30B" /></p>
     <p><label for="aColor">Link color:</label><br />
     <input class="color" name="aColor" value="#436370" /></p>
     <p><label for="aHoverColor">Link hover color:</label><br />

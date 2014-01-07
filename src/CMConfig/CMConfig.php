@@ -45,7 +45,7 @@ class CMConfig extends CObject implements IHasSQL, ArrayAccess, IModule {
           $this->db->ExecuteQuery(self::SQL('create table adminConfig'));
           $this->db->ExecuteQuery(self::SQL('create table adminStyleConfig'));
           $this->db->ExecuteQuery(self::SQL('insert into adminConfig'), array('Malin', 'A PHP-based MVC-inspired CMF', 'Malin © by Daniel Schäder (nds_se@hotmail.com)', 'on', 'on', 'on', 'on', 'on', 'Startpage', 'Guestbook', 'Blog', 'Extra page 1', 'Extra page 2'));
-          $this->db->ExecuteQuery(self::SQL('insert into adminStyleConfig'), array('FFE2B3', 'D0DCE1', 'D0DCE1', 'FFCE80', '999', '436370', '990000', '000000', 'Verdana, Arial, Helvetica, sans-serif'));
+          $this->db->ExecuteQuery(self::SQL('insert into adminStyleConfig'), array('CBFFC9', 'FFFFFF', '00FF12', '00A30B', '00A30B', '436370', '990000', '000000', '"Courier New", Courier, monospace, sans-serif'));
 
           return array('success', 'Successfully created the database tables and created default style settings.');
         } catch(Exception$e) {
