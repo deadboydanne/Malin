@@ -1,45 +1,47 @@
 Malin - Ett enkelt MVC ramverk
 ==============================
 
-Detta ramverk är ett projekt baserat på kursen PHPMVC, gjort av Daniel Schäder.
+Detta ramverk Ã¤r ett projekt baserat pÃ¥ kursen PHPMVC, gjort av Daniel SchÃ¤der.
 
 
 Installation
 ------------
 
-För att installera Malin måste du först ladda ner ramverket från Github och sedan ladda upp på din server. Som standard är ramverket inställt på att det ligger som grund till din webbsida. Skulle du lägga Malin inuti en mapp på din server måste du nagivera .htaccess filen dit vilket du gör genom att skriva in vart det ligger på raden "RewriteBase".
+FÃ¶r att installera Malin mÃ¥ste du fÃ¶rst ladda ner ramverket frÃ¥n Github och sedan ladda upp pÃ¥ din server. Som standard Ã¤r ramverket instÃ¤llt pÃ¥ att det ligger som grund till din webbsida. Skulle du lÃ¤gga Malin inuti en mapp pÃ¥ din server mÃ¥ste du nagivera .htaccess filen dit vilket du gÃ¶r genom att skriva in vart det ligger pÃ¥ raden "RewriteBase".
 
 t ex:
 
     RewriteBase / {din mapp} /
   
-Nu kan du navigera till din server i webbläsaren. Där kan du se en startsida där det finns information om det nuvarande läget för ramverket. Det står lite lätt information vad du behöver göra för att kunna installera databasen och inställningar. I den nedersta rutan skall det nu stå `Your database has not yet been configured please proceed with setup`. Det är för att databasen inte är konfigurerad. Klicka på `Begin setup` när du vill fortsätta.
+Nu kan du navigera till din server i webblÃ¤saren. DÃ¤r kan du se en startsida dÃ¤r det finns information om det nuvarande lÃ¤get fÃ¶r ramverket. Det stÃ¥r lite lÃ¤tt information vad du behÃ¶ver gÃ¶ra fÃ¶r att kunna installera databasen och instÃ¤llningar. I den nedersta rutan skall det nu stÃ¥ `Your database has not yet been configured please proceed with setup`. Det Ã¤r fÃ¶r att databasen inte Ã¤r konfigurerad. Klicka pÃ¥ `Begin setup` nÃ¤r du vill fortsÃ¤tta.
 
-Nu påbörjas en installationsprocess du kan följa för att installera ramverket. Följ instruktionerna för att konfigurera ramverket.
+Nu pÃ¥bÃ¶rjas en installationsprocess du kan fÃ¶lja fÃ¶r att installera ramverket. FÃ¶lj instruktionerna fÃ¶r att konfigurera ramverket.
 
-Användning
+Under installationsprocessen kommer du att fÃ¥ vÃ¤lja vilka sidor du vill ha pÃ¥ din webbsida vilket inkluderar Startsida, gÃ¤stbok, blogg och tvÃ¥ extra sidor. FÃ¶r dom som vill ha fler sidor finns det beskrivning pÃ¥ detta lÃ¤ngre ner i denna readme.
+
+AnvÃ¤ndning
 ----------
 
-Nu när ramverket är installerat kan du endast nå startsidan om du är inloggad som en administratör och sedan klickar på webbsidans rubrik eller logga. Annars hamnar du på den offentliga startsidan som du ställt in via installationen.
+Nu nÃ¤r ramverket Ã¤r installerat kan du endast nÃ¥ startsidan om du Ã¤r inloggad som en administratÃ¶r och sedan klickar pÃ¥ webbsidans rubrik eller logga. Annars hamnar du pÃ¥ den offentliga startsidan som du stÃ¤llt in via installationen.
 
-När du loggat in som `admin` kan du klicka på länken `acp` uppe i högra hörnet. Där kommer du till `Admin Control Panel`. Där kan du lägga till användare/grupper, redigera existerande användare/grupper, ändra en användares medlemskap i grupper, ändra dina sido-inställningar och ändra utseendet på webbsidan. Allt innehåll i acp är endast tillgängligt för administratörer. Användare som är medlemmar av `The Administrator Group` är alla administratörer.
+NÃ¤r du loggat in som `admin` kan du klicka pÃ¥ lÃ¤nken `acp` uppe i hÃ¶gra hÃ¶rnet. DÃ¤r kommer du till `Admin Control Panel`. DÃ¤r kan du lÃ¤gga till anvÃ¤ndare/grupper, redigera existerande anvÃ¤ndare/grupper, Ã¤ndra en anvÃ¤ndares medlemskap i grupper, Ã¤ndra dina sido-instÃ¤llningar och Ã¤ndra utseendet pÃ¥ webbsidan. Allt innehÃ¥ll i acp Ã¤r endast tillgÃ¤ngligt fÃ¶r administratÃ¶rer. AnvÃ¤ndare som Ã¤r medlemmar av `The Administrator Group` Ã¤r alla administratÃ¶rer.
 
-När du klickar på startsidan, extra sidan 1 och extra sidan 2 kan du se vart du hittar respektive .php fil där du kan redigera innehållet i vardera sida. Där skriver du endast det innehåll du vill ha och inte några <body> eller <head> taggar.
+NÃ¤r du klickar pÃ¥ startsidan, extra sidan 1 och extra sidan 2 kan du se vart du hittar respektive .php fil dÃ¤r du kan redigera innehÃ¥llet i vardera sida. DÃ¤r skriver du endast det innehÃ¥ll du vill ha och inte nÃ¥gra <body> eller <head> taggar.
 
-För att ändra din logo  går du in på site/themes/mytheme/ och ersätter logo_80x80.png med din logo av filtyp png med samma namn. Alltså logo_80x80.png.
+FÃ¶r att Ã¤ndra din logo  gÃ¥r du in pÃ¥ site/themes/mytheme/ och ersÃ¤tter logo_80x80.png med din logo av filtyp png med samma namn. AlltsÃ¥ logo_80x80.png.
 
-skapa ny sida (avancerade användare)
+skapa ny sida (avancerade anvÃ¤ndare)
 ------------------------------------
 
-För mer avancerade användare kan du skapa ännu fler sidor än de du har att välja på i installationen. Till att börja med kan du lägga till en länk i navigeringsmenyn. Detta gör du genom att lägga till denna kod i `Add menu links` i site/config.php:
+FÃ¶r mer avancerade anvÃ¤ndare kan du skapa Ã¤nnu fler sidor Ã¤n de du har att vÃ¤lja pÃ¥ i installationen. Till att bÃ¶rja med kan du lÃ¤gga till en lÃ¤nk i navigeringsmenyn. Detta gÃ¶r du genom att lÃ¤gga till denna kod i `Add menu links` i site/config.php:
 
 	  $ma->config['menus']['my-navbar']['*variable name*'] = array('label'=>'*page name*', 'url'=>'my/*method*');
 
-Denna kod finns färdig men kommenterad inne i filen men vill du ha fler länkar kan du kopiera den. Det du nu behöver göra är att döpa om *variable name* till ett namn på variabeln som kännetecknar din sida. Sedan skriver du om *page name* till namnet på din nya sida och till sist skriver du om *method* till vad du ska döpa din metod till, vilket kommer bli som din länk till sidan.
+Denna kod finns fÃ¤rdig men kommenterad inne i filen men vill du ha fler lÃ¤nkar kan du kopiera den. Det du nu behÃ¶ver gÃ¶ra Ã¤r att dÃ¶pa om *variable name* till ett namn pÃ¥ variabeln som kÃ¤nnetecknar din sida. Sedan skriver du om *page name* till namnet pÃ¥ din nya sida och till sist skriver du om *method* till vad du ska dÃ¶pa din metod till, vilket kommer bli som din lÃ¤nk till sidan.
 
-Nu går du in i webbläsaren till din sida, loggar in som administratör och klickar på acp sedan Create content. Hur du skapar innehåll till en sida kan du se längst ner i denna readme på Skriva ett blogginlägg. när du gjort detta går du in på view all. under fliken all content hittar du det inlägg du precis skapat och till vänster om det står en siffra. memorera den siffran för nästa steg.
+Nu gÃ¥r du in i webblÃ¤saren till din sida, loggar in som administratÃ¶r och klickar pÃ¥ acp sedan Create content. Hur du skapar innehÃ¥ll till en sida kan du se lÃ¤ngst ner i denna readme pÃ¥ Skriva ett blogginlÃ¤gg. nÃ¤r du gjort detta gÃ¥r du in pÃ¥ view all. under fliken all content hittar du det inlÃ¤gg du precis skapat och till vÃ¤nster om det stÃ¥r en siffra. memorera den siffran fÃ¶r nÃ¤sta steg.
 
-Nu öppnar du upp filen site/src/CCMycontroller/CCMycontroller.php. Där inne i klassen CCMycontroller lägger du till denna koden:
+Nu Ã¶ppnar du upp filen site/src/CCMycontroller/CCMycontroller.php. DÃ¤r inne i klassen CCMycontroller lÃ¤gger du till denna koden:
 
 	  public function *method*() {
 	    $content = new CMContent(*Content id*);
@@ -50,14 +52,14 @@ Nu öppnar du upp filen site/src/CCMycontroller/CCMycontroller.php. Där inne i kl
 	
 	  }
 
-Koden finns redan där men kommenterad. Precis som innan kan du kopiera den för att göra flera sidor. Nu kollar du igenom koden och skriver om *method* till vad du döpte din metod till i navigeringsmenyn. Sedan skriver du om *Content id* till den siffran du skulle memorera av ditt inlägg. Denna fungerar som en id för vilket innehåll du ska visa på sidan. *page title* skriver du om till vad du vill att din sida ska ha för titel.
+Koden finns redan dÃ¤r men kommenterad. Precis som innan kan du kopiera den fÃ¶r att gÃ¶ra flera sidor. Nu kollar du igenom koden och skriver om *method* till vad du dÃ¶pte din metod till i navigeringsmenyn. Sedan skriver du om *Content id* till den siffran du skulle memorera av ditt inlÃ¤gg. Denna fungerar som en id fÃ¶r vilket innehÃ¥ll du ska visa pÃ¥ sidan. *page title* skriver du om till vad du vill att din sida ska ha fÃ¶r titel.
 
-Nu var det färdigt och du kan använda din sida.
+Nu var det fÃ¤rdigt och du kan anvÃ¤nda din sida.
 
 Debug
 -----
 
-I config.php som finns i site mappen kan du ställa in om du vill visa debug på din sida om du skulle vilja felsöka något. Där kan du se allt som händer och innehåll i filer o s v. Detta aktiverar du Genom att sätta följande värden på `True`.
+I config.php som finns i site mappen kan du stÃ¤lla in om du vill visa debug pÃ¥ din sida om du skulle vilja felsÃ¶ka nÃ¥got. DÃ¤r kan du se allt som hÃ¤nder och innehÃ¥ll i filer o s v. Detta aktiverar du Genom att sÃ¤tta fÃ¶ljande vÃ¤rden pÃ¥ `True`.
 
     /**
      * Set what to show as debug or developer information in the get_debug() theme helper.
@@ -68,13 +70,13 @@ I config.php som finns i site mappen kan du ställa in om du vill visa debug på d
     $ma->config['debug']['db-num-queries'] = false;
     $ma->config['debug']['db-queries'] = false;
 
-Skriva ett blogginlägg
+Skriva ett blogginlÃ¤gg
 ----------------------
 
-Skriva ett blogginlägg kan du göra om du är administratör. Då kommer du åt denna funktion antingen genom att klicka på acp uppe i högra hörnet och sedan create content, eller när du redigerar ett existerande inlägg klickar du på create new. När du gör ett nytt inlägg ska du fylla i följande rutor:
+Skriva ett blogginlÃ¤gg kan du gÃ¶ra om du Ã¤r administratÃ¶r. DÃ¥ kommer du Ã¥t denna funktion antingen genom att klicka pÃ¥ acp uppe i hÃ¶gra hÃ¶rnet och sedan create content, eller nÃ¤r du redigerar ett existerande inlÃ¤gg klickar du pÃ¥ create new. NÃ¤r du gÃ¶r ett nytt inlÃ¤gg ska du fylla i fÃ¶ljande rutor:
 
-* Title: Här skriver du inläggets/sidans titel.
-* key: En kort länktext för inlägget/sidan
-* Content: Inläggets/sidans innehåll
-* Filter: I filter skriver du hur innehållet ska visas upp. du kan välja på htmlpurify, bbcode och plain. Vad som är skillnaden på dessa kan du se på exempelinlägg som kommer med vid installation av databasen.
-* Type: Här fyller du i vad för sorts typ inlägget/sidan ska vara. I detta fallet ska det vara post. För mer avancerade användare kan du skriva page här och använda inlägget som en webbsida.
+* Title: HÃ¤r skriver du inlÃ¤ggets/sidans titel.
+* key: En kort lÃ¤nktext fÃ¶r inlÃ¤gget/sidan
+* Content: InlÃ¤ggets/sidans innehÃ¥ll
+* Filter: I filter skriver du hur innehÃ¥llet ska visas upp. du kan vÃ¤lja pÃ¥ htmlpurify, bbcode och plain. Vad som Ã¤r skillnaden pÃ¥ dessa kan du se pÃ¥ exempelinlÃ¤gg som kommer med vid installation av databasen.
+* Type: HÃ¤r fyller du i vad fÃ¶r sorts typ inlÃ¤gget/sidan ska vara. I detta fallet ska det vara post. FÃ¶r mer avancerade anvÃ¤ndare kan du skriva page hÃ¤r och anvÃ¤nda inlÃ¤gget som en webbsida.
