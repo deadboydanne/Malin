@@ -241,6 +241,14 @@ $ma->config['menus'] = array(
   if($pageTwoActive == 'on'){
 	  $ma->config['menus']['my-navbar']['pageTwo'] = array('label'=>$pageTwoName, 'url'=>'my/extraPageTwo');
   };
+  
+/**
+ * Add menu links.
+ *
+ * here you can add more links to the menu. (advanced users)
+ */
+
+	  //$ma->config['menus']['my-navbar']['*variable name*'] = array('label'=>'*page name*', 'url'=>'my/*method*');
 
 /**
  * Settings for the theme. The theme may have a parent theme.

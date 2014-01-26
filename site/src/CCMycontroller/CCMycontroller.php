@@ -81,12 +81,27 @@ class CCMycontroller extends CObject implements IController {
   }
 
   /**
-   * The extra page one
+   * Access denied page
    */
   public function accessDenied() {
     $this->views->SetTitle('Access Denied')
                 ->AddInclude(__DIR__ . '/accessDenied.tpl.php', array());
   }
+  
+    /**
+   * Advanced users extra page
+   */
+   
+  /* 
+  public function *method*() {
+    $content = new CMContent(*Content id*);
+    $this->views->SetTitle('*Page title*'.htmlEnt($content['title']))
+                ->AddInclude(__DIR__ . '/newpage.tpl.php', array(
+                  'content' => $content,
+                ));
+
+  }
+  */
 
 } 
 
